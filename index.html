@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sơ đồ tư duy ôn tập Triết học Mác – Lênin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --paper:#EDF1F4; --surface:#FFFFFF; --ink:#1B2733; --muted:#56646F; --line:#CBD4DC;
+  --root:#1E3A5F; --root-ink:#FFFFFF; --focus:#2F5D9E;
+  --b1:#1F7A72; --b2:#7A3E6E; --b3:#9A6A0B; --b4:#2F5D9E; --b5:#A13B3B; --b6:#4D7A2A; --b7:#5B4B9A; --b8:#8A5A2B;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --paper:#121A22; --surface:#18222C; --ink:#E3E9EE; --muted:#9AA8B4; --line:#2B3845;
+    --root:#C9D8E8; --root-ink:#10202F; --focus:#7FA6E6;
+    --b1:#5CC2B8; --b2:#D08BC2; --b3:#E0B04A; --b4:#7FA6E6; --b5:#E58585; --b6:#94C46A; --b7:#A797E6; --b8:#D2A06E;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --paper:#121A22; --surface:#18222C; --ink:#E3E9EE; --muted:#9AA8B4; --line:#2B3845;
+  --root:#C9D8E8; --root-ink:#10202F; --focus:#7FA6E6;
+  --b1:#5CC2B8; --b2:#D08BC2; --b3:#E0B04A; --b4:#7FA6E6; --b5:#E58585; --b6:#94C46A; --b7:#A797E6; --b8:#D2A06E;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  font-size:16px; line-height:1.5;
+}
+header{max-width:1200px; margin:0 auto; padding:28px 20px 8px}
+h1{font-size:clamp(1.35rem, 3vw, 1.9rem); line-height:1.2; margin:0 0 6px; font-weight:700; letter-spacing:-0.01em}
+.sub{color:var(--muted); margin:0; max-width:70ch; font-size:.95rem}
+nav{
+  max-width:1200px; margin:0 auto; padding:14px 20px 0;
+  display:flex; gap:6px; overflow-x:auto; scrollbar-width:thin;
+}
+nav button{
+  flex:0 0 auto; font:inherit; font-size:.92rem; font-weight:600;
+  padding:7px 14px; border-radius:999px; cursor:pointer;
+  border:1.5px solid var(--line); background:var(--surface); color:var(--ink);
+}
+nav button[aria-current="true"]{background:var(--root); color:var(--root-ink); border-color:var(--root)}
+nav button:focus-visible, .ctrl button:focus-visible{outline:3px solid var(--focus); outline-offset:2px}
+main{max-width:1200px; margin:0 auto; padding:18px 20px 32px}
+.q{
+  font-size:1.08rem; font-weight:600; line-height:1.45; margin:0 0 14px; max-width:80ch;
+}
+.q span{color:var(--muted); font-weight:400}
+.ctrl{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:10px}
+.ctrl button{
+  font:inherit; font-size:.88rem; padding:6px 12px; border-radius:8px; cursor:pointer;
+  border:1.5px solid var(--line); background:var(--surface); color:var(--ink);
+}
+.ctrl .hint{color:var(--muted); font-size:.85rem}
+.map-wrap{
+  background:var(--surface); border:1.5px solid var(--line); border-radius:14px;
+  overflow:auto; padding:8px; max-width:100%;
+}
+.map-wrap svg{display:block; margin:0 auto; height:auto}
+.pager{display:flex; justify-content:space-between; gap:10px; margin-top:14px}
+.pager button{
+  font:inherit; font-size:.92rem; padding:8px 14px; border-radius:8px; cursor:pointer;
+  border:1.5px solid var(--line); background:var(--surface); color:var(--ink);
+}
+.pager button:disabled{opacity:.4; cursor:default}
+.pager button:focus-visible{outline:3px solid var(--focus); outline-offset:2px}
+@media (prefers-reduced-motion: no-preference){
+  .map-wrap svg{animation:appear .35s ease-out}
+  @keyframes appear{from{opacity:0} to{opacity:1}}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Sơ đồ tư duy ôn tập Triết học Mác – Lênin</h1>
+  <p class="sub">11 sơ đồ cho Câu 1 và 10 câu tự luận. Đọc từ chủ đề ở giữa, đi theo từng nhánh màu, rồi tự trình bày lại bằng lời của mình.</p>
+</header>
+<nav id="tabs" aria-label="Chọn câu hỏi"></nav>
+<main>
+  <p class="q" id="question"></p>
+  <div class="ctrl">
+    <button id="zoom" type="button">Phóng to</button>
+    <span class="hint" id="zoomHint"></span>
+  </div>
+  <div class="map-wrap" id="wrap"></div>
+  <div class="pager">
+    <button id="prev" type="button">‹ Câu trước</button>
+    <button id="next" type="button">Câu sau ›</button>
+  </div>
+</main>
+
+<script>
+const MAPS = [
+{id:"cau-1", label:"Câu 1",
+ q:"Quan điểm của triết học Mác – Lênin về vấn đề cơ bản của triết học? Cách giải quyết vấn đề cơ bản? Triết học Mác – Lênin có chức năng gì?",
+ root:"Vấn đề cơ bản của triết học & chức năng của THMLN",
+ branches:[
+  {t:"Vấn đề cơ bản của triết học", i:["Ăngghen: quan hệ giữa tư duy và tồn tại, ý thức và vật chất","Mặt 1 (bản thể luận): cái nào có trước, quyết định cái nào?","Mặt 2 (nhận thức luận): con người có nhận thức được thế giới không?"]},
+  {t:"Các trường phái", i:["Chủ nghĩa duy vật: vật chất có trước (chất phác → siêu hình → biện chứng)","Chủ nghĩa duy tâm: ý thức có trước (chủ quan, khách quan)","Nhất nguyên, nhị nguyên, đa nguyên","Khả tri luận và bất khả tri luận (Hium, Cantơ)"]},
+  {t:"Cách giải quyết của THMLN", i:["Vật chất có trước, ý thức có sau, vật chất quyết định ý thức","Ý thức tác động trở lại vật chất qua thực tiễn","Con người có khả năng nhận thức thế giới","Duy vật triệt để cả trong tự nhiên và xã hội"]},
+  {t:"Triết gia qua các thời kỳ", i:["Cổ đại: Talét, Hêraclít, Đêmôcrít, Platôn, Arixtốt","“Người truyền thông” cổ đại: Xôcrát đối thoại giữa quảng trường","Cận đại: Bêcơn, Đêcáctơ, Spinôda","Cổ điển Đức: Hêghen, Phoiơbắc → Mác, Ăngghen, Lênin"]},
+  {t:"Chức năng thế giới quan", i:["Hệ thống quan điểm về thế giới và vị trí con người trong thế giới","Cấu trúc: tri thức, niềm tin, lý tưởng","Hình thức: thần thoại, tôn giáo, triết học","TGQ duy vật biện chứng: khoa học, cách mạng"]},
+  {t:"Chức năng phương pháp luận", i:["Lý luận về phương pháp, hệ thống nguyên tắc chỉ đạo hoạt động","Cấp độ: PPL ngành, PPL chung, PPL chung nhất (triết học)","Phép biện chứng duy vật: toàn diện, lịch sử – cụ thể, phát triển"]},
+  {t:"THMLN trong TGQ của mỗi người", i:["Hạt nhân lý luận của thế giới quan","Định hướng niềm tin, lý tưởng, lối sống","Chống mê tín, cực đoan, tin giả","Rèn tư duy phê phán, hệ thống, nhân quả"]},
+  {t:"TGQ người Việt qua các giai đoạn", i:["Truyền thống: làng xã, nông nghiệp, thờ cúng tổ tiên","1945–1975: độc lập dân tộc, chủ nghĩa yêu nước","Đổi mới 1986: kinh tế thị trường, hội nhập","Hôm nay: chuyển đổi số, AI, phát triển bền vững"]}
+ ]},
+{id:"cau-5", label:"Câu 5",
+ q:"Phân tích định nghĩa vật chất của V.I. Lênin? Nêu ý nghĩa phương pháp luận của định nghĩa này.",
+ root:"Định nghĩa vật chất của Lênin",
+ branches:[
+  {t:"Trước Lênin", i:["Cổ đại: vật chất là nước, lửa, không khí, nguyên tử","Thế kỷ XVII–XVIII: vật chất = khối lượng, nguyên tử; máy móc, siêu hình","Ăngghen: vật chất là trừu tượng hóa thuộc tính chung của các vật thể","Khủng hoảng vật lý: tia X, phóng xạ, điện tử → “vật chất tiêu tan”?"]},
+  {t:"Định nghĩa (1908)", i:["Vật chất là phạm trù triết học chỉ thực tại khách quan…","Tác phẩm: Chủ nghĩa duy vật và chủ nghĩa kinh nghiệm phê phán"]},
+  {t:"Ý 1: Phạm trù triết học", i:["Khái quát nhất, không đồng nhất với vật thể cụ thể","Vô hạn, vô tận, không sinh ra, không mất đi"]},
+  {t:"Ý 2: Thực tại khách quan", i:["Tồn tại độc lập với ý thức","Tác động vào giác quan, gây cảm giác (trực tiếp, gián tiếp)","Vật chất có trước, ý thức có sau"]},
+  {t:"Ý 3: Được phản ánh", i:["Cảm giác chép lại, chụp lại, phản ánh vật chất","Con người nhận thức được thế giới","Bác bỏ thuyết bất khả tri"]},
+  {t:"Vật chất và vật thể", i:["Vật chất: phạm trù, vô hạn, nhận biết bằng tư duy","Vật thể: cụ thể, hữu hạn, nhận biết bằng giác quan, công cụ","Thế giới đa dạng: hạt Higgs, sóng hấp dẫn, vật chất tối"]},
+  {t:"Ý nghĩa phương pháp luận", i:["Giải quyết triệt để hai mặt vấn đề cơ bản","Bác bỏ duy tâm, khắc phục duy vật cũ","Định hướng cho khoa học tự nhiên","Cơ sở quan niệm duy vật về xã hội","Xuất phát từ thực tế khách quan, chống duy ý chí"]}
+ ]},
+{id:"cau-8", label:"Câu 8",
+ q:"Trình bày quan điểm của CNDVBC về mối quan hệ giữa vật chất và ý thức. Ý nghĩa phương pháp luận của vấn đề này?",
+ root:"Quan hệ vật chất – ý thức",
+ branches:[
+  {t:"Khái niệm", i:["Vật chất: thực tại khách quan (định nghĩa Lênin)","Ý thức: phản ánh năng động, sáng tạo thế giới vào bộ óc","Nguồn gốc tự nhiên: bộ óc + thế giới khách quan","Nguồn gốc xã hội: lao động + ngôn ngữ","Kết cấu: tri thức, tình cảm, ý chí"]},
+  {t:"Vật chất quyết định ý thức", i:["Quyết định nguồn gốc","Quyết định nội dung","Quyết định bản chất","Quyết định sự vận động, biến đổi"]},
+  {t:"Ý thức tác động trở lại", i:["Có tính độc lập tương đối","Tác động thông qua hoạt động thực tiễn","Ý thức đúng thúc đẩy, ý thức sai kìm hãm","Vai trò ngày càng lớn trong kinh tế tri thức"]},
+  {t:"Ý nghĩa phương pháp luận", i:["Xuất phát từ thực tế khách quan, tôn trọng quy luật","Chống chủ quan duy ý chí, nóng vội","Phát huy tính năng động chủ quan","Chống thụ động, ỷ lại, trông chờ"]},
+  {t:"Liên hệ thực tiễn", i:["Trước 1986: duy ý chí, bao cấp → khủng hoảng","Đổi mới: xuất phát từ thực tế, tôn trọng quy luật khách quan","Sinh viên: kế hoạch dựa trên năng lực thật + ý chí, đam mê"]}
+ ]},
+{id:"cau-10", label:"Câu 10",
+ q:"Trình bày nguyên lý mối liên hệ phổ biến của PBCDV. Ý nghĩa phương pháp luận của nguyên lý này?",
+ root:"Nguyên lý mối liên hệ phổ biến",
+ branches:[
+  {t:"Thế giới tồn tại thế nào?", i:["Siêu hình: sự vật tách rời, cô lập","Biện chứng: thế giới là chỉnh thể thống nhất","Cơ sở: tính thống nhất vật chất của thế giới"]},
+  {t:"Khái niệm", i:["Mối liên hệ: quy định, tác động, chuyển hóa lẫn nhau","Mối liên hệ phổ biến: có ở mọi sự vật, mọi lĩnh vực"]},
+  {t:"Tính chất", i:["Khách quan","Phổ biến","Đa dạng: bên trong – bên ngoài, chủ yếu – thứ yếu, trực tiếp – gián tiếp…"]},
+  {t:"Nội dung nguyên lý", i:["Không sự vật nào tồn tại cô lập","Thế giới có trật tự, tuân theo quy luật"]},
+  {t:"Ý nghĩa phương pháp luận", i:["Quan điểm toàn diện: xem xét mọi mặt, mọi mối liên hệ","Nắm mối liên hệ bản chất, chủ yếu","Tránh phiến diện, chiết trung, ngụy biện","Quan điểm lịch sử – cụ thể"]},
+  {t:"Liên hệ thực tiễn", i:["Phát triển bền vững: kinh tế – xã hội – môi trường","Bài học sự cố môi trường biển miền Trung 2016","Học tập: phương pháp, sức khỏe, môi trường mạng","Kiểm chứng tin tức trong thời đại AI"]}
+ ]},
+{id:"cau-11", label:"Câu 11",
+ q:"Trình bày nguyên lý về sự phát triển của PBCDV? Ý nghĩa phương pháp luận của nguyên lý này?",
+ root:"Nguyên lý về sự phát triển",
+ branches:[
+  {t:"Khái niệm", i:["Siêu hình: chỉ tăng giảm về lượng, vòng tròn khép kín","Biện chứng: vận động đi lên, thấp → cao, kém hoàn thiện → hoàn thiện hơn","Vận động khác phát triển"]},
+  {t:"Bốn tính chất", i:["Khách quan","Phổ biến","Kế thừa","Đa dạng, phong phú"]},
+  {t:"Nội dung nguyên lý", i:["Mọi sự vật luôn vận động, phát triển","Nguồn gốc: mâu thuẫn","Cách thức: lượng đổi → chất đổi","Khuynh hướng: phủ định của phủ định, xoáy ốc"]},
+  {t:"Ý nghĩa phương pháp luận", i:["Nhìn sự vật trong vận động, thấy khuynh hướng","Chống bảo thủ, trì trệ, định kiến","Kiên trì trước quanh co, thụt lùi tạm thời","Ủng hộ cái mới, kế thừa có chọn lọc","Kết hợp quan điểm lịch sử – cụ thể"]},
+  {t:"Thực tiễn Việt Nam", i:["Lạm phát trên 700% (1986) → ổn định","Ra khỏi nhóm thu nhập thấp (2008)","GDP/người: khoảng 100 USD → khoảng 4.700 USD (2024)","Mục tiêu 2045: nước phát triển, thu nhập cao"]}
+ ]},
+{id:"cau-17", label:"Câu 17",
+ q:"Trình bày quy luật từ những thay đổi về lượng dẫn đến thay đổi về chất và ngược lại. Nêu ý nghĩa phương pháp luận?",
+ root:"Quy luật lượng – chất",
+ branches:[
+  {t:"Vị trí", i:["Quy luật: liên hệ bản chất, tất nhiên, phổ biến, lặp lại","Chỉ ra cách thức của sự phát triển"]},
+  {t:"Khái niệm", i:["Chất: tính quy định làm sự vật là nó","Lượng: số lượng, quy mô, trình độ, nhịp điệu","Độ: giới hạn lượng đổi chưa làm chất đổi","Điểm nút: thời điểm chất đổi","Bước nhảy: sự chuyển hóa về chất"]},
+  {t:"Nội dung quy luật", i:["Lượng đổi dần trong độ, chất chưa đổi","Vượt độ, tại điểm nút → bước nhảy → chất mới","Chất mới quy định lượng mới","Bước nhảy: đột biến hoặc dần dần; toàn bộ hoặc cục bộ"]},
+  {t:"Ý nghĩa phương pháp luận", i:["Kiên trì tích lũy về lượng","Chống tả khuynh: nóng vội, đốt cháy giai đoạn","Chống hữu khuynh: bảo thủ, ngại bước nhảy","Biết giữ độ"]},
+  {t:"Vận dụng", i:["Học tập: tích lũy hằng ngày → tốt nghiệp, ra nghề","Học dồn = bước nhảy khi chưa đủ lượng","Đổi mới: tích lũy → ra khỏi nhóm thu nhập thấp","Khí hậu: các “điểm tới hạn” của Trái Đất"]}
+ ]},
+{id:"cau-20", label:"Câu 20",
+ q:"Trình bày quan điểm của triết học Mác – Lênin về thực tiễn (khái niệm, hình thức và vai trò của thực tiễn).",
+ root:"Thực tiễn",
+ branches:[
+  {t:"Khái niệm", i:["Hoạt động vật chất – cảm tính, có mục đích","Mang tính lịch sử – xã hội","Nhằm cải tạo tự nhiên và xã hội","Mác đưa thực tiễn vào lý luận nhận thức"]},
+  {t:"Thực tiễn và nhận thức", i:["Thực tiễn: vật chất, dùng công cụ, biến đổi hiện thực","Nhận thức: tinh thần, dùng khái niệm, tạo ra tri thức"]},
+  {t:"Hình thức", i:["Sản xuất vật chất (cơ bản nhất)","Chính trị – xã hội","Thực nghiệm khoa học"]},
+  {t:"Vai trò với nhận thức", i:["Cơ sở của nhận thức","Động lực của nhận thức","Mục đích của nhận thức","Tiêu chuẩn của chân lý (tuyệt đối và tương đối)"]},
+  {t:"Ý nghĩa phương pháp luận", i:["Quán triệt quan điểm thực tiễn","Học đi đôi với hành","Chống kinh nghiệm chủ nghĩa","Chống giáo điều"]},
+  {t:"Liên hệ thực tiễn", i:["“Khoán chui” → Chỉ thị 100 (1981), Khoán 10 (1988)","Kiểm chứng thông tin và câu trả lời của AI","Sinh viên: thực tập, nghiên cứu khoa học, tình nguyện"]}
+ ]},
+{id:"cau-23", label:"Câu 23",
+ q:"Trình bày quy luật quan hệ sản xuất phù hợp với trình độ phát triển của lực lượng sản xuất. Liên hệ với thực tiễn.",
+ root:"Quy luật QHSX phù hợp với trình độ LLSX",
+ branches:[
+  {t:"Vai trò", i:["Quy luật cơ bản nhất của sự phát triển xã hội","Tác động trong phương thức sản xuất","Chu trình: phù hợp → không phù hợp → phù hợp mới"]},
+  {t:"Lực lượng sản xuất", i:["Người lao động (quan trọng nhất)","Tư liệu sản xuất: đối tượng + tư liệu lao động","Công cụ lao động: yếu tố động nhất","Khoa học – công nghệ: LLSX trực tiếp"]},
+  {t:"Quan hệ sản xuất", i:["Sở hữu tư liệu sản xuất (quyết định)","Tổ chức, quản lý sản xuất","Phân phối sản phẩm"]},
+  {t:"Nội dung quy luật", i:["LLSX quyết định QHSX","QHSX cũ thành “xiềng xích” → bị thay thế","QHSX phù hợp thúc đẩy LLSX","Không phù hợp (lạc hậu hoặc vượt trước) thì kìm hãm"]},
+  {t:"Vận dụng ở Việt Nam", i:["Sai: trước 1986 QHSX “vượt trước” LLSX","Hậu quả: năng suất thấp, thiếu lương thực, lạm phát","Đúng: Đổi mới, kinh tế nhiều thành phần, Khoán 10","Nay: thể chế cho kinh tế số, dữ liệu, AI"]}
+ ]},
+{id:"cau-25", label:"Câu 25",
+ q:"Trình bày phạm trù Hình thái kinh tế – xã hội của CNDVLS? Liên hệ thực tiễn Việt Nam.",
+ root:"Hình thái kinh tế – xã hội",
+ branches:[
+  {t:"Khái niệm", i:["Xã hội ở từng giai đoạn lịch sử nhất định","Kiểu QHSX đặc trưng phù hợp trình độ LLSX","Kiến trúc thượng tầng tương ứng"]},
+  {t:"Cấu trúc", i:["LLSX: nền tảng vật chất – kỹ thuật","QHSX: tổng hợp thành cơ sở hạ tầng","Kiến trúc thượng tầng: chính trị, pháp quyền, đạo đức, nhà nước…"]},
+  {t:"Năm hình thái", i:["Cộng sản nguyên thủy","Chiếm hữu nô lệ","Phong kiến","Tư bản chủ nghĩa","Cộng sản chủ nghĩa (giai đoạn đầu: CNXH)"]},
+  {t:"Vì sao thay thế nhau?", i:["LLSX phát triển, QHSX cũ không còn phù hợp","Mâu thuẫn → đấu tranh giai cấp → cách mạng xã hội","Cơ sở hạ tầng đổi → kiến trúc thượng tầng đổi","Quá trình lịch sử – tự nhiên; có thể “bỏ qua”"]},
+  {t:"Việt Nam", i:["Không trải qua chế độ nô lệ điển hình","Phong kiến lâu dài → thuộc địa nửa phong kiến","Quá độ lên CNXH bỏ qua chế độ TBCN","Hiện nay: thời kỳ quá độ"]},
+  {t:"Để tiến lên", i:["Công nghiệp hóa, hiện đại hóa, chuyển đổi số","Kinh tế thị trường định hướng XHCN","Nhà nước pháp quyền XHCN","Văn hóa, con người, nguồn nhân lực"]}
+ ]},
+{id:"cau-32", label:"Câu 32",
+ q:"Trình bày quan điểm của triết học Mác về mối quan hệ biện chứng giữa tồn tại xã hội và ý thức xã hội.",
+ root:"Tồn tại xã hội – ý thức xã hội",
+ branches:[
+  {t:"Tồn tại xã hội", i:["Sinh hoạt vật chất và điều kiện sinh hoạt vật chất","Phương thức sản xuất (quyết định)","Điều kiện tự nhiên, địa lý","Dân số, mật độ dân số"]},
+  {t:"Ý thức xã hội", i:["Mặt tinh thần của đời sống xã hội","Thông thường và lý luận","Tâm lý xã hội và hệ tư tưởng","Hình thái: chính trị, pháp quyền, đạo đức, tôn giáo, thẩm mỹ, khoa học, triết học"]},
+  {t:"TTXH quyết định YTXH", i:["Quyết định nguồn gốc, nội dung","Quyết định tính chất (tính giai cấp)","TTXH thay đổi → YTXH thay đổi"]},
+  {t:"Tính độc lập tương đối", i:["Thường lạc hậu","Có thể vượt trước","Có tính kế thừa","Các hình thái tác động lẫn nhau","Tác động trở lại TTXH"]},
+  {t:"Thực chất", i:["Vận dụng quan hệ vật chất – ý thức vào xã hội","Mác đưa chủ nghĩa duy vật lên lĩnh vực xã hội"]},
+  {t:"Ý nghĩa và liên hệ", i:["Đổi ý thức phải bắt đầu từ đổi đời sống vật chất","Chủ động xây dựng ý thức mới","Chống hủ tục, lợi ích nhóm","Giữ giá trị truyền thống tốt đẹp"]}
+ ]},
+{id:"cau-34", label:"Câu 34",
+ q:"Trình bày quan điểm của triết học Mác về con người và bản chất con người?",
+ root:"Con người và bản chất con người",
+ branches:[
+  {t:"Thống nhất sinh học – xã hội", i:["Sinh học: sản phẩm tiến hóa, nhu cầu tự nhiên","Xã hội: lao động, ngôn ngữ, ý thức","Sinh học là tiền đề, xã hội là bản chất","Tránh tuyệt đối hóa một mặt"]},
+  {t:"Chủ thể và sản phẩm", i:["Sản phẩm của tự nhiên và lịch sử","Chủ thể cải tạo tự nhiên, xã hội, chính mình","Con người tạo hoàn cảnh, hoàn cảnh tạo con người"]},
+  {t:"Tổng hòa các quan hệ xã hội", i:["Luận cương về Phoiơbắc (1845)","Bác bỏ bản chất trừu tượng, bất biến","“Trong tính hiện thực”: qua thực tiễn","Nhiều quan hệ; quan hệ sản xuất quyết định","Bản chất có tính lịch sử, biến đổi"]},
+  {t:"Ý nghĩa", i:["Hiểu con người qua quan hệ xã hội cụ thể","Cải tạo quan hệ xã hội để phát triển con người","Con người là trung tâm, mục tiêu, động lực"]},
+  {t:"Thách thức hôm nay", i:["AI: phụ thuộc, giảm tư duy độc lập","Mạng xã hội: cô đơn, sống ảo, bạo lực mạng","Công nghệ gen: giới hạn đạo đức","Thị trường: tha hóa, thương mại hóa giá trị"]},
+  {t:"Hướng giải quyết", i:["Pháp luật về không gian mạng và AI","Giáo dục tư duy phê phán","Gìn giữ gia đình, cộng đồng","Công nghệ là công cụ, không thay thế con người"]}
+ ]}
+];
+
+const FONT = '"Be Vietnam Pro", "Segoe UI", system-ui, sans-serif';
+const S = {
+  root:{size:17, weight:700, maxW:210, lh:23, px:18, py:14},
+  br:{size:14, weight:600, maxW:180, lh:19, px:12, py:9},
+  leaf:{size:13, weight:400, maxW:250, lh:18}
+};
+const ctx = document.createElement("canvas").getContext("2d");
+function wrap(text, st){
+  ctx.font = `${st.weight} ${st.size}px ${FONT}`;
+  const words = text.split(" "); const lines = []; let cur = "";
+  for (const w of words){
+    const t = cur ? cur + " " + w : w;
+    if (ctx.measureText(t).width > st.maxW && cur){ lines.push(cur); cur = w; } else cur = t;
+  }
+  if (cur) lines.push(cur);
+  const width = Math.max(...lines.map(l => ctx.measureText(l).width));
+  return {lines, width};
+}
+const NS = "http://www.w3.org/2000/svg";
+function el(name, attrs, parent){
+  const e = document.createElementNS(NS, name);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function textBlock(parent, lines, x, yTop, st, anchor, fill){
+  const t = el("text", {x, "font-size":st.size, "font-weight":st.weight, "text-anchor":anchor, fill, "font-family":FONT}, parent);
+  lines.forEach((l, k) => {
+    const sp = el("tspan", {x, y: yTop + st.size + k*st.lh - (st.lh - st.size)/2 + 1}, t);
+    sp.textContent = l;
+  });
+  return t;
+}
+
+let natural = {w:0, h:0};
+function render(map){
+  const svg = el("svg", {xmlns:NS, role:"img", "aria-label":"Sơ đồ tư duy: " + map.root});
+  const gEdges = el("g", {fill:"none", "stroke-linecap":"round"}, svg);
+  const gNodes = el("g", {}, svg);
+  const b = {minX:Infinity, maxX:-Infinity, minY:Infinity, maxY:-Infinity};
+  const grow = (x1,y1,x2,y2) => { b.minX=Math.min(b.minX,x1,x2); b.maxX=Math.max(b.maxX,x1,x2); b.minY=Math.min(b.minY,y1,y2); b.maxY=Math.max(b.maxY,y1,y2); };
+
+  const r = wrap(map.root, S.root);
+  const rw = r.width + S.root.px*2, rh = r.lines.length*S.root.lh + S.root.py*2;
+
+  const n = map.branches.length, half = Math.ceil(n/2);
+  const sides = [map.branches.slice(0, half).map((x,k)=>({...x, c:k})), map.branches.slice(half).map((x,k)=>({...x, c:k+half}))];
+  const GAP_BLOCK = 30, GAP_LEAF = 8;
+
+  sides.forEach((list, si) => {
+    const dir = si === 0 ? 1 : -1;
+    const blocks = list.map(br => {
+      const bt = wrap(br.t, S.br);
+      const bw = bt.width + S.br.px*2, bh = bt.lines.length*S.br.lh + S.br.py*2;
+      const leaves = br.i.map(s => { const w = wrap(s, S.leaf); return {...w, h: w.lines.length*S.leaf.lh + 6}; });
+      const lh = leaves.reduce((a,l)=>a+l.h,0) + GAP_LEAF*(leaves.length-1);
+      return {br, bt, bw, bh, leaves, H: Math.max(bh, lh), lh};
+    });
+    const total = blocks.reduce((a,x)=>a+x.H,0) + GAP_BLOCK*(blocks.length-1);
+    let y = -total/2;
+    blocks.forEach(B => {
+      const color = `var(--b${B.br.c+1})`;
+      const cy = y + B.H/2;
+      const near = dir*(rw/2 + 70);
+      const far = near + dir*B.bw;
+      const bx = Math.min(near, far);
+      // root → branch
+      const sx = dir*rw/2, sy = 0;
+      el("path", {d:`M${sx},${sy} C${sx+dir*45},${sy} ${near-dir*40},${cy} ${near},${cy}`, stroke:color, "stroke-width":3.2}, gEdges);
+      el("rect", {x:bx, y:cy-B.bh/2, width:B.bw, height:B.bh, rx:10, fill:color, "fill-opacity":0.13, stroke:color, "stroke-width":1.8}, gNodes);
+      textBlock(gNodes, B.bt.lines, bx + B.bw/2, cy - B.bh/2 + S.br.py, S.br, "middle", "var(--ink)");
+      grow(bx, cy-B.bh/2, bx+B.bw, cy+B.bh/2);
+      // leaves
+      let ly = cy - B.lh/2;
+      const lx = far + dir*44;
+      B.leaves.forEach(L => {
+        const underY = ly + L.lines.length*S.leaf.lh + 3;
+        el("path", {d:`M${far},${cy} C${far+dir*24},${cy} ${lx-dir*22},${underY} ${lx},${underY}`, stroke:color, "stroke-width":1.6, "stroke-opacity":0.85}, gEdges);
+        el("line", {x1:lx, y1:underY, x2:lx+dir*(L.width+4), y2:underY, stroke:color, "stroke-width":1.6, "stroke-opacity":0.85}, gEdges);
+        textBlock(gNodes, L.lines, lx + dir*2, ly, S.leaf, dir===1 ? "start" : "end", "var(--ink)");
+        grow(lx, ly, lx+dir*(L.width+4), underY);
+        ly += L.h + GAP_LEAF;
+      });
+      y += B.H + GAP_BLOCK;
+    });
+  });
+
+  el("rect", {x:-rw/2, y:-rh/2, width:rw, height:rh, rx:16, fill:"var(--root)"}, gNodes);
+  textBlock(gNodes, r.lines, 0, -rh/2 + S.root.py, S.root, "middle", "var(--root-ink)");
+  grow(-rw/2, -rh/2, rw/2, rh/2);
+
+  const pad = 24;
+  const vx = b.minX - pad, vy = b.minY - pad, vw = b.maxX - b.minX + pad*2, vh = b.maxY - b.minY + pad*2;
+  svg.setAttribute("viewBox", `${vx} ${vy} ${vw} ${vh}`);
+  natural = {w: vw, h: vh};
+  return svg;
+}
+
+const tabs = document.getElementById("tabs");
+const wrapEl = document.getElementById("wrap");
+const zoomBtn = document.getElementById("zoom");
+const zoomHint = document.getElementById("zoomHint");
+let zoomed = window.matchMedia("(max-width: 700px)").matches;
+let current = 0;
+
+MAPS.forEach((m, k) => {
+  const btn = document.createElement("button");
+  btn.type = "button"; btn.textContent = m.label;
+  btn.addEventListener("click", () => { location.hash = m.id; });
+  tabs.appendChild(btn);
+});
+
+function applyZoom(){
+  const svg = wrapEl.querySelector("svg");
+  if (!svg) return;
+  if (zoomed){ svg.style.width = natural.w + "px"; svg.style.maxWidth = "none"; }
+  else { svg.style.width = "100%"; svg.style.maxWidth = natural.w + "px"; }
+  zoomBtn.textContent = zoomed ? "Thu vừa khung" : "Phóng to";
+  zoomHint.textContent = zoomed ? "Kéo ngang để xem hết sơ đồ." : "";
+}
+
+function show(){
+  const id = (location.hash || "").slice(1);
+  let k = MAPS.findIndex(m => m.id === id);
+  if (k < 0) k = 0;
+  current = k;
+  const m = MAPS[k];
+  [...tabs.children].forEach((b, j) => b.setAttribute("aria-current", j === k ? "true" : "false"));
+  tabs.children[k].scrollIntoView({block:"nearest", inline:"nearest"});
+  document.getElementById("question").innerHTML = "";
+  const q = document.getElementById("question");
+  q.append(m.label + ". ");
+  const sp = document.createElement("span"); sp.textContent = m.q; q.appendChild(sp);
+  wrapEl.innerHTML = "";
+  wrapEl.appendChild(render(m));
+  wrapEl.scrollLeft = 0;
+  applyZoom();
+  document.getElementById("prev").disabled = k === 0;
+  document.getElementById("next").disabled = k === MAPS.length - 1;
+}
+
+zoomBtn.addEventListener("click", () => { zoomed = !zoomed; applyZoom(); });
+document.getElementById("prev").addEventListener("click", () => { if (current > 0) location.hash = MAPS[current-1].id; });
+document.getElementById("next").addEventListener("click", () => { if (current < MAPS.length-1) location.hash = MAPS[current+1].id; });
+window.addEventListener("hashchange", show);
+
+const ready = document.fonts && document.fonts.load
+  ? Promise.all([document.fonts.load(`700 17px "Be Vietnam Pro"`), document.fonts.load(`600 14px "Be Vietnam Pro"`), document.fonts.load(`400 13px "Be Vietnam Pro"`)]).catch(()=>{})
+  : Promise.resolve();
+Promise.race([ready, new Promise(r => setTimeout(r, 2500))]).then(show);
+</script>
+</body>
+</html>
